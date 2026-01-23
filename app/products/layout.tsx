@@ -1,7 +1,11 @@
-export default function BlogLayout({
+export default function ProductsLayout({
   children,
 }: {
-  children: React.ReactNode
+  children: React.ReactNode;
 }) {
-  return <section>{children}</section>
+  return (
+    <section>    
+      <main>{children}</main>
+    </section>
+  );
 }

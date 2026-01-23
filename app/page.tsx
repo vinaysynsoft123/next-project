@@ -1,6 +1,8 @@
 import Image from "next/image";
 import Link from "next/link";
 
+import CategoriesSection from "@/app/components/CategoriesSection";
+
 export default function HomePage() {
   return (
     <div className="bg-zinc-50 dark:bg-black text-zinc-900 dark:text-white">
@@ -35,7 +37,7 @@ export default function HomePage() {
 
         <div className="relative h-[420px] w-full">
           <Image
-            src="/hero.png"
+            src="/hero.webp"
             alt="Ecommerce Hero"
             fill
             priority
@@ -45,36 +47,7 @@ export default function HomePage() {
       </section>
 
       {/* CATEGORIES */}
-      <section className="mx-auto max-w-7xl px-6 py-16">
-        <h2 className="text-3xl font-semibold mb-10">Shop by Category</h2>
-
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-          {[
-            { name: "Electronics", image: "/categories/electronics.png" },
-            { name: "Fashion", image: "/categories/fashion.png" },
-            { name: "Accessories", image: "/categories/accessories.png" },
-            { name: "Home", image: "/categories/home.png" },
-          ].map((category) => (
-            <Link
-              key={category.name}
-              href="/products"
-              className="group rounded-xl bg-white dark:bg-zinc-900 p-6 text-center shadow hover:shadow-lg transition"
-            >
-              <div className="relative mx-auto h-24 w-24">
-                <Image
-                  src={category.image}
-                  alt={category.name}
-                  fill
-                  className="object-contain"
-                />
-              </div>
-              <p className="mt-4 font-medium group-hover:underline">
-                {category.name}
-              </p>
-            </Link>
-          ))}
-        </div>
-      </section>
+      <CategoriesSection />
 
       {/* FEATURED PRODUCTS */}
       <section className="mx-auto max-w-7xl px-6 py-16">

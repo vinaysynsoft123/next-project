@@ -1,5 +1,5 @@
 import Link from "next/link";
-
+import CartIcon from "@/app/components/CartIcon";
 export default function Navbar() {
   return (
     <header className="sticky top-0 z-50 bg-white dark:bg-black border-b border-zinc-200 dark:border-zinc-800">
@@ -42,16 +42,7 @@ export default function Navbar() {
               Login
             </Link>
 
-            <Link
-              href="/cart"
-              className="relative rounded-full border border-zinc-300 p-2 hover:bg-zinc-100 dark:border-zinc-700 dark:hover:bg-zinc-900"
-            >
-              🛒
-              {/* Cart count badge (optional) */}
-              <span className="absolute -top-2 -right-2 h-5 w-5 rounded-full bg-black text-white text-xs flex items-center justify-center dark:bg-white dark:text-black">
-                2
-              </span>
-            </Link>
+            <CartIcon />
           </div>
         </div>
       </div>
