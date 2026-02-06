@@ -1,0 +1,34 @@
+import { API_URL } from "@/api/Axois";
+
+export async function getProfile(token: string) {
+  const res = await fetch(`${API_URL}/user/profile`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+  if (!res.ok) throw new Error("Failed to fetch profile");
+  return res.json();
+}
+
+export async function updateProfile(token: string, payload: any) {
+  const res = await fetch(`${API_URL}/user/profile`, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify(payload),
+  });
+  if (!res.ok) throw new Error("Failed to update profile");
+  return res.json();
+}
+
+export async function getUserOrders(token: string) {
+  const res = await fetch(`${API_URL}/orders/my-orders`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+  if (!res.ok) throw new Error("Failed to fetch orders");
+  return res.json();
+}

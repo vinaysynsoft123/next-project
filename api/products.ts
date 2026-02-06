@@ -1,9 +1,10 @@
 import { Product } from "@/types/product";
+import { API_URL } from "@/api/Axois";
 
-const API_URL = "http://localhost:3001/api/users";
+
 
 export async function getProducts(): Promise<Product[]> {
-  const res = await fetch(`${API_URL}/product_list`, {
+  const res = await fetch(`${API_URL}/products`, {
     cache: "no-store",
   });
 
@@ -11,12 +12,14 @@ export async function getProducts(): Promise<Product[]> {
     throw new Error("Failed to fetch products");
   }
 
-  return res.json();
+  const response = await res.json();  
+  return response.data;
 }
 
-export async function getProductById(id: string): Promise<Product> {
+
+export async function getProductById(id: number): Promise<Product> {
   console.log("fetching product by id"); 
-  const res = await fetch(`${API_URL}/product/${id}`, {
+  const res = await fetch(`${API_URL}/products/${id}`, {
     cache: "no-store",
   });
 
@@ -24,5 +27,6 @@ export async function getProductById(id: string): Promise<Product> {
     throw new Error("Product not found");
   }
 
-  return res.json();
+   const response = await res.json();  
+  return response.data;
 }

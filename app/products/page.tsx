@@ -3,8 +3,7 @@ import Link from "next/link";
 import { getProducts } from "@/api/products";
 
 export default async function ProductsPage() {
-  const products = await getProducts();
-
+  const products = await getProducts(); 
   return (
   <div className="bg-zinc-50 dark:bg-black text-zinc-900 dark:text-white">
     

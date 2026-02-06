@@ -9,7 +9,7 @@ export default function AddToCartButton({ product }: { product: Product }) {
   return (
     <button
       onClick={() => addToCart(product)}
-      className="rounded-lg bg-black px-8 py-3 text-white hover:bg-zinc-800 dark:bg-white dark:text-black"
+      className="rounded-lg bg-black px-8 py-3 text-white hover:bg-zinc-800 dark:bg-white dark:text-black cursor-pointer"
     >
       Add to Cart
     </button>

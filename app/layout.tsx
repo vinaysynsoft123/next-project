@@ -10,6 +10,8 @@ export const metadata: Metadata = {
   description: "Buy products online",
 };
 
+import { Toaster } from "react-hot-toast";
+
 export default function RootLayout({
   children,
 }: {
@@ -20,6 +22,7 @@ export default function RootLayout({
       <body>
         <AuthProvider>
         <CartProvider>
+          <Toaster position="top-right" reverseOrder={false} />
           <Navbar />
           <main style={{ minHeight: "80vh" }}>{children}</main>
           <Footer />

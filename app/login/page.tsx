@@ -4,37 +4,100 @@ import { loginUser } from "@/api/auth";
 import { useAuth } from "@/context/AuthContext";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import Link from "next/link";
+import toast from "react-hot-toast";
 
 export default function LoginPage() {
   const { login } = useAuth();
   const router = useRouter();
   const [form, setForm] = useState({ email: "", password: "" });
+  const [loading, setLoading] = useState(false);
 
-  const submit = async (e: any) => {
+  const submit = async (e: React.FormEvent) => {
     e.preventDefault();
-    const data = await loginUser(form);
-    login(data);
-    router.push("/");
+    setLoading(true);
+    try {
+      const data = await loginUser(form);
+      login(data);
+      toast.success("Login successful!");
+      router.push("/dashboard");
+    } catch (err: any) {
+      toast.error(err.message || "Invalid email or password");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
-    <div className="max-w-md mx-auto py-20">
-      <h1 className="text-2xl font-bold mb-6">Login</h1>
+    <div className="min-h-[80vh] flex items-center justify-center px-4 bg-gray-50/50">
+      <div className="w-full max-w-md">
+        <div className="bg-white rounded-2xl shadow-xl border border-gray-100 p-8">
+          <div className="text-center mb-10">
+            <h1 className="text-3xl font-bold text-gray-900 mb-2">Welcome Back</h1>
+            <p className="text-gray-500">Please enter your details to sign in</p>
+          </div>
 
-      <form onSubmit={submit} className="space-y-4">
-        <input
-          placeholder="Email"
-          className="w-full border p-3"
-          onChange={(e) => setForm({ ...form, email: e.target.value })}
-        />
-        <input
-          type="password"
-          placeholder="Password"
-          className="w-full border p-3"
-          onChange={(e) => setForm({ ...form, password: e.target.value })}
-        />
-        <button className="w-full bg-black text-white p-3">Login</button>
-      </form>
+          <form onSubmit={submit} className="space-y-6">
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                Email Address
+              </label>
+              <input
+                type="email"
+                placeholder="you@example.com"
+                required
+                className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:ring-2 focus:ring-black focus:border-transparent outline-none transition-all"
+                onChange={(e) => setForm({ ...form, email: e.target.value })}
+              />
+            </div>
+
+            <div>
+              <div className="flex justify-between mb-2">
+                <label className="text-sm font-medium text-gray-700">Password</label>
+                <Link 
+                  href="/forgot-password" 
+                  className="text-sm text-gray-500 hover:text-black transition"
+                >
+                  Forgot?
+                </Link>
+              </div>
+              <input
+                type="password"
+                placeholder="••••••••"
+                required
+                className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:ring-2 focus:ring-black focus:border-transparent outline-none transition-all"
+                onChange={(e) => setForm({ ...form, password: e.target.value })}
+              />
+            </div>
+
+            <button
+              disabled={loading}
+              className="w-full bg-black cursor-pointer text-white py-4 rounded-xl font-bold hover:bg-gray-800 transition active:scale-[0.98] disabled:bg-gray-400 disabled:cursor-not-allowed shadow-lg shadow-black/10"
+            >
+              {loading ? (
+                <span className="flex items-center justify-center gap-2">
+                  <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                  Logging in...
+                </span>
+              ) : (
+                "Sign In"
+              )}
+            </button>
+          </form>
+
+          <div className="mt-8 text-center pt-8 border-t border-gray-100">
+            <p className="text-gray-600 font-medium">
+              Don&apos;t have an account?{" "}
+              <Link 
+                href="/register" 
+                className="text-black font-bold hover:underline underline-offset-4"
+              >
+                Sign Up
+              </Link>
+            </p>
+          </div>
+        </div>
+      </div>
     </div>
   );
 }

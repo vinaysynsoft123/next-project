@@ -1,4 +1,5 @@
 // api/categories.ts
+import { API_URL } from "@/api/Axois";
 export type Category = {
   id: number;
   name: string;
@@ -7,7 +8,6 @@ export type Category = {
     image: string | null;
 };
 
-const API_URL = "http://localhost:3001/api";
 
 export async function getCategories(): Promise<Category[]> {
   const res = await fetch(`${API_URL}/categories`, {
@@ -18,5 +18,6 @@ export async function getCategories(): Promise<Category[]> {
     throw new Error("Failed to fetch categories");
   }
 
-  return res.json();
+  const response = await res.json();
+  return response.data;
 }

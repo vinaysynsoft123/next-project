@@ -6,11 +6,13 @@ import { getProductById } from "@/api/products";
 export default async function ProductDetailsPage({
   params,
 }: {
-  params: Promise<{ id: string }>;
+  params: Promise<{ id: number }>;
+
 }) {
   const { id } = await params;
   const product = await getProductById(id);
 
+console.log(product);
   const imageUrl =
     product.image && product.image.trim() !== ""
       ? `http://localhost:3001/uploads/${product.image}`
@@ -59,8 +61,7 @@ export default async function ProductDetailsPage({
             </p>
 
             <p className="mt-6 text-zinc-600 dark:text-zinc-400 leading-relaxed">
-              This is a premium quality product designed to give you the best
-              shopping experience. Durable, stylish, and value for money.
+             {product.details}
             </p>
 
             {/* ACTIONS */}
