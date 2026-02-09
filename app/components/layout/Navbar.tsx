@@ -3,10 +3,13 @@
 import Link from "next/link";
 import CartIcon from "@/app/components/CartIcon";
 import { useAuth } from "@/context/AuthContext";
+import { usePathname } from "next/navigation";
 
 export default function Navbar() {
   const { user } = useAuth();
+  const pathname = usePathname();
 
+  if (pathname.startsWith("/admin")) return null;
   return (
     <header className="sticky top-0 z-50 bg-white dark:bg-black border-b border-zinc-200 dark:border-zinc-800">
       <div className="mx-auto max-w-7xl px-6">

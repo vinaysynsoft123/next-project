@@ -181,7 +181,7 @@ export default function CartPage() {
                             <Trash2 size={18} />
                           </button>
                         </div>
-                        <p className="text-gray-500 text-sm mb-4">Unit Price: ${item.price}</p>
+                        <p className="text-gray-500 text-sm mb-4">Unit Price: ₹{item.price}</p>
                         <div className="flex items-center justify-between">
                           <div className="flex items-center bg-gray-50 rounded-xl p-1 border border-gray-100">
                             <button 
@@ -198,7 +198,7 @@ export default function CartPage() {
                               <Plus size={14} />
                             </button>
                           </div>
-                          <p className="font-extrabold text-xl font-mono">${(item.price * item.quantity).toFixed(2)}</p>
+                          <p className="font-extrabold text-xl font-mono">₹{(item.price * item.quantity).toFixed(2)}</p>
                         </div>
                       </div>
                     </div>
@@ -264,7 +264,7 @@ export default function CartPage() {
                       <div className="p-6 bg-black text-white rounded-2xl flex items-center justify-between font-mono">
                         <div>
                           <p className="text-[10px] font-bold uppercase tracking-widest opacity-60">Amount to Pay</p>
-                          <p className="text-2xl font-black">${total.toFixed(2)}</p>
+                          <p className="text-2xl font-black">₹{total.toFixed(2)}</p>
                         </div>
                         <CreditCard size={32} />
                       </div>
@@ -353,7 +353,7 @@ export default function CartPage() {
                 <div className="space-y-4 mb-8">
                   <div className="flex justify-between text-gray-500">
                     <span>Subtotal</span>
-                    <span className="font-bold text-gray-900">${total.toFixed(2)}</span>
+                    <span className="font-bold text-gray-900">₹{total.toFixed(2)}</span>
                   </div>
                   <div className="flex justify-between text-gray-500">
                     <span>Shipping</span>
@@ -361,7 +361,7 @@ export default function CartPage() {
                   </div>
                   <div className="pt-4 border-t border-gray-50 flex justify-between">
                     <span className="text-lg font-bold">Total</span>
-                    <span className="text-2xl font-black text-black font-mono">${total.toFixed(2)}</span>
+                    <span className="text-2xl font-black text-black font-mono">₹{total.toFixed(2)}</span>
                   </div>
                 </div>
 

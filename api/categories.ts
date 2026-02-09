@@ -1,15 +1,8 @@
 // api/categories.ts
 import { API_URL } from "@/api/Axois";
-export type Category = {
-  id: number;
-  name: string;
-  status: string;
-  slug: string;
-    image: string | null;
-};
 
 
-export async function getCategories(): Promise<Category[]> {
+export async function getCategories(): Promise<any> {
   const res = await fetch(`${API_URL}/categories`, {
     cache: "no-store", // always fresh data
   });

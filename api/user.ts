@@ -32,3 +32,13 @@ export async function getUserOrders(token: string) {
   if (!res.ok) throw new Error("Failed to fetch orders");
   return res.json();
 }
+
+export async function getAllUsers(token: string) {
+  const res = await fetch(`${API_URL}/user/all-users`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+  if (!res.ok) throw new Error("Failed to fetch users");
+  return res.json();
+}

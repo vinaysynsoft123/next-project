@@ -5,8 +5,7 @@ import { getProducts } from "@/api/products";
 export default async function ProductsPage() {
   const products = await getProducts(); 
   return (
-  <div className="bg-zinc-50 dark:bg-black text-zinc-900 dark:text-white">
-    
+  <div className="bg-zinc-50 dark:bg-black text-zinc-900 dark:text-white">   
 
       <section className="mx-auto max-w-7xl px-6 py-16">
         <div className="flex items-center justify-between mb-10">
@@ -17,18 +16,19 @@ export default async function ProductsPage() {
           {products.map((product) => (
             <div
               key={product.id}
-              className="rounded-xl bg-white dark:bg-zinc-900 shadow hover:shadow-lg transition"
-            >
-              <img
+              className="rounded-xl bg-white dark:bg-zinc-900 shadow hover:shadow-lg transition">
+               <Link
+                  href={`/products/${product.id}`}> <img
                 src={`https://argento-m2.swissupdemo.com/media/catalog/product/cache/008f094270e752a24599ac3fd36e2e5c/5/1/51sdsgpapwl.jpg.webp`}
                 alt="Product 1"
                 className="w-full rounded-t-xl"
-              />
+              /> </Link>
 
               <div className="p-5">
-                <h3 className="font-medium">{product.name}</h3>
+               <Link
+                  href={`/products/${product.id}`}>  <h3 className="font-medium">{product.name}</h3> </Link>
                 <p className="mt-1 text-sm text-zinc-600 dark:text-zinc-400">
-                  ${product.price}
+                  ₹ {product.price}
                 </p>
 
                 <Link

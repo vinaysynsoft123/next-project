@@ -20,7 +20,13 @@ export default function LoginPage() {
       const data = await loginUser(form);
       login(data);
       toast.success("Login successful!");
-      router.push("/dashboard");
+      
+      // Redirect based on role
+      if (data.user.role.toLowerCase() === "admin") {
+        router.push("/admin");
+      } else {
+        router.push("/dashboard");
+      }
     } catch (err: any) {
       toast.error(err.message || "Invalid email or password");
     } finally {
