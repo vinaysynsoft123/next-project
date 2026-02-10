@@ -42,3 +42,13 @@ export async function getAllUsers(token: string) {
   if (!res.ok) throw new Error("Failed to fetch users");
   return res.json();
 }
+
+export async function getUserById(token: string, id: string) {
+  const res = await fetch(`${API_URL}/user/${id}`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+  if (!res.ok) throw new Error("Failed to fetch user details");
+  return res.json();
+}

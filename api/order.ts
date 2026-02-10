@@ -31,3 +31,14 @@ export async function getOrderDetails(token: string, id: number) {
   if (!res.ok) throw new Error("Failed to fetch order details");
   return res.json();
 }
+
+
+export async function getAllOrdersAdmin(token: string) {
+  const res = await fetch(`${API_URL}/orders/admin/all`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+  if (!res.ok) throw new Error("Failed to fetch orders");
+  return res.json();
+}

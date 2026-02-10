@@ -7,6 +7,7 @@ import Link from "next/link";
 import { 
   LayoutDashboard, 
   Package, 
+  List,
   Users, 
   ShoppingCart, 
   Settings, 
@@ -50,6 +51,7 @@ export default function AdminLayout({
 
   const menuItems = [
     { icon: LayoutDashboard, label: "Dashboard", href: "/admin" },
+    { icon: List, label: "Products Categories", href: "/admin/product-categories" },
     { icon: Package, label: "Products", href: "/admin/products" },
     { icon: ShoppingCart, label: "Orders", href: "/admin/orders" },
     { icon: Users, label: "Users", href: "/admin/users" },

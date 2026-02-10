@@ -1,9 +1,10 @@
 "use client";
 
-import { UserPlus, Search, Shield, User, Trash2, Mail } from "lucide-react";
+import { UserPlus, Search, Shield, User, Trash2, Mail, Eye } from "lucide-react";
 import { useEffect, useState } from "react";
 import { getAllUsers } from "@/api/user";
 import toast from "react-hot-toast";
+import Link from "next/link";
 
 export default function AdminUsers() {
   const [users, setUsers] = useState<any[]>([]);
@@ -105,6 +106,12 @@ export default function AdminUsers() {
                       <button className="p-2 text-gray-400 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition">
                         <Mail size={16} />
                       </button>
+                      <Link 
+                        href={`/admin/users/${user.id}`}
+                        className="p-2 text-gray-400 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition"
+                      >
+                        <Eye size={16} />
+                      </Link>
                       <button className="p-2 text-gray-400 hover:text-red-600 hover:bg-red-50 rounded-lg transition">
                         <Trash2 size={16} />
                       </button>

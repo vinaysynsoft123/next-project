@@ -1,22 +1,47 @@
+"use client";
+
 import { Search, Eye, Download, MoreHorizontal, Calendar } from "lucide-react";
+import { getAllOrdersAdmin } from "@/api/order";
+import { useEffect, useState } from "react";
+import toast from "react-hot-toast";
 
 export default function AdminOrders() {
-  const orders = [
-    { id: "ORD-001", customer: "John Doe", date: "2024-02-08", amount: "$1,200.00", status: "Completed", payment: "Stripe" },
-    { id: "ORD-002", customer: "Jane Smith", date: "2024-02-09", amount: "$345.50", status: "Processing", payment: "PayPal" },
-    { id: "ORD-003", customer: "Robert Johnson", date: "2024-02-09", amount: "$89.99", status: "Pending", payment: "Stripe" },
-    { id: "ORD-004", customer: "Emma Wilson", date: "2024-02-07", amount: "$560.00", status: "Shipped", payment: "Stripe" },
-  ];
+  const [orders, setOrders] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchOrders = async () => {
+      try {
+        const token = localStorage.getItem("token");
+        if (!token) throw new Error("No token found");
+        const res = await getAllOrdersAdmin(token);
+        setOrders(res.data);
+      } catch (err: any) {
+        toast.error("Failed to load orders");
+        console.error(err);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchOrders();
+  }, []);
 
   const getStatusColor = (status: string) => {
-    switch (status) {
-      case "Completed": return "bg-green-50 text-green-600 border-green-100";
-      case "Processing": return "bg-blue-50 text-blue-600 border-blue-100";
-      case "Pending": return "bg-orange-50 text-orange-600 border-orange-100";
-      case "Shipped": return "bg-purple-50 text-purple-600 border-purple-100";
+    switch (status?.toLowerCase()) {
+      case "completed": return "bg-green-50 text-green-600 border-green-100";
+      case "processing": return "bg-blue-50 text-blue-600 border-blue-100";
+      case "pending": return "bg-orange-50 text-orange-600 border-orange-100";
+      case "shipped": return "bg-purple-50 text-purple-600 border-purple-100";
+      case "cancelled": return "bg-red-50 text-red-600 border-red-100";
       default: return "bg-gray-50 text-gray-600 border-gray-100";
     }
   };
+
+  if (loading) return (
+    <div className="flex justify-center items-center h-64">
+      <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-600"></div>
+    </div>
+  );
 
   return (
     <div className="space-y-6">
@@ -66,10 +91,10 @@ export default function AdminOrders() {
             <tbody className="divide-y divide-gray-50">
               {orders.map((order) => (
                 <tr key={order.id} className="hover:bg-gray-50/50 transition">
-                  <td className="px-6 py-4 text-sm font-bold text-blue-600">{order.id}</td>
-                  <td className="px-6 py-4 text-sm text-gray-900">{order.customer}</td>
-                  <td className="px-6 py-4 text-sm text-gray-500">{order.date}</td>
-                  <td className="px-6 py-4 text-sm font-bold text-gray-900">{order.amount}</td>
+                  <td className="px-6 py-4 text-sm font-bold text-blue-600">{order.order_id}</td>
+                  <td className="px-6 py-4 text-sm text-gray-900">{order.user_name}</td>
+                  <td className="px-6 py-4 text-sm text-gray-500">{new Date(order.created_at).toLocaleDateString()}</td>
+                  <td className="px-6 py-4 text-sm font-bold text-gray-900">₹{order.total_amount}</td>
                   <td className="px-6 py-4">
                     <span className={`px-2.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider border ${getStatusColor(order.status)}`}>
                       {order.status}
@@ -94,3 +119,4 @@ export default function AdminOrders() {
     </div>
   );
 }
+

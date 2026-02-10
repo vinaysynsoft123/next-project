@@ -28,3 +28,32 @@ export async function getProductById(id: number): Promise<Product> {
   const response = await res.json();
   return response.data;
 }
+
+export async function createProduct(formData: FormData) {
+  const res = await fetch(`${API_URL}/products`, {
+    method: "POST",
+    body: formData,
+  });
+  if (!res.ok) throw new Error("Failed to create product");
+  return res.json();
+}
+
+export async function updateProduct(id: number, formData: FormData) {
+  const res = await fetch(`${API_URL}/products/${id}`, {
+    method: "PUT",
+    body: formData,
+  });
+  if (!res.ok) throw new Error("Failed to update product");
+  return res.json();
+}
+
+export async function deleteProduct(id: number) {
+  const res = await fetch(`${API_URL}/products/${id}`, {
+    method: "DELETE",
+  });
+  if (!res.ok) {
+    const errorData = await res.json();
+    throw new Error(errorData.message || "Failed to delete product");
+  }
+  return res.json();
+}
