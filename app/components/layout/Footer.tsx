@@ -6,14 +6,20 @@ import { usePathname } from "next/navigation";
 export default function Footer() {
   const pathname = usePathname();
 
-  if (pathname.startsWith("/admin")) return null;
+  if (
+    pathname.startsWith("/admin") ||
+    pathname === "/login" ||
+    pathname === "/register"
+  ) {
+    return null;
+  }
   return (
     <footer className="bg-zinc-100 dark:bg-zinc-950 border-t border-zinc-200 dark:border-zinc-800">
       <div className="mx-auto max-w-7xl px-6 py-14">
-        
+
         {/* TOP SECTION */}
         <div className="grid grid-cols-1 md:grid-cols-4 gap-10">
-          
+
           {/* BRAND */}
           <div>
             <h3 className="text-xl font-bold">ShopEase</h3>

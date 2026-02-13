@@ -3,6 +3,8 @@ import Link from "next/link";
 import AddToCartButton from "@/app/components/AddToCartButton";
 import { getProductById } from "@/api/products";
 
+const API_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
+
 export default async function ProductDetailsPage({
   params,
 }: {
@@ -11,12 +13,15 @@ export default async function ProductDetailsPage({
 }) {
   const { id } = await params;
   const product = await getProductById(id);
-
-console.log(product);
+  console.log(product);
   const imageUrl =
-    product.image && product.image.trim() !== ""
-      ? `http://localhost:3001/uploads/${product.image}`
-      : "/products/default.png";
+    product?.images && product.images.trim() !== ""
+      ? `${API_URL?.replace("/api", "")}/${product.images.replace(
+        /\\/g,
+        "/"
+      )}`
+      : "https://argento-m2.swissupdemo.com/media/catalog/product/cache/008f094270e752a24599ac3fd36e2e5c/5/1/51sdsgpapwl.jpg.webp";
+
 
   return (
     <div className="bg-zinc-50 dark:bg-black min-h-screen">
@@ -61,7 +66,7 @@ console.log(product);
             </p>
 
             <p className="mt-6 text-zinc-600 dark:text-zinc-400 leading-relaxed">
-             {product.details}
+              {product.details}
             </p>
 
             {/* ACTIONS */}

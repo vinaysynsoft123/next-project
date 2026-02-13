@@ -20,7 +20,7 @@ export default function LoginPage() {
       const data = await loginUser(form);
       login(data);
       toast.success("Login successful!");
-      
+
       // Redirect based on role
       if (data.user.role.toLowerCase() === "admin") {
         router.push("/admin");
@@ -60,8 +60,8 @@ export default function LoginPage() {
             <div>
               <div className="flex justify-between mb-2">
                 <label className="text-sm font-medium text-gray-700">Password</label>
-                <Link 
-                  href="/forgot-password" 
+                <Link
+                  href="/forgot-password"
                   className="text-sm text-gray-500 hover:text-black transition"
                 >
                   Forgot?
@@ -94,8 +94,8 @@ export default function LoginPage() {
           <div className="mt-8 text-center pt-8 border-t border-gray-100">
             <p className="text-gray-600 font-medium">
               Don&apos;t have an account?{" "}
-              <Link 
-                href="/register" 
+              <Link
+                href="/register"
                 className="text-black font-bold hover:underline underline-offset-4"
               >
                 Sign Up

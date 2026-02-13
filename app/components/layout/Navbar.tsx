@@ -9,12 +9,18 @@ export default function Navbar() {
   const { user } = useAuth();
   const pathname = usePathname();
 
-  if (pathname.startsWith("/admin")) return null;
+  if (
+    pathname.startsWith("/admin") ||
+    pathname === "/login" ||
+    pathname === "/register"
+  ) {
+    return null;
+  }
   return (
     <header className="sticky top-0 z-50 bg-white dark:bg-black border-b border-zinc-200 dark:border-zinc-800">
       <div className="mx-auto max-w-7xl px-6">
         <div className="flex h-16 items-center justify-between">
-          
+
           {/* LOGO */}
           <Link href="/" className="text-xl font-bold tracking-wide">
             ShopEase
@@ -36,7 +42,7 @@ export default function Navbar() {
           {/* RIGHT ACTIONS */}
           <div className="flex items-center gap-4">
             <CartIcon />
-            
+
             {user ? (
               <Link
                 href="/dashboard"

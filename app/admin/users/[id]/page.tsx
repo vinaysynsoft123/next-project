@@ -3,13 +3,13 @@
 import { useEffect, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
 import { getUserById } from "@/api/user";
-import { 
-  User, 
-  Mail, 
-  Phone, 
-  Calendar, 
-  Shield, 
-  ArrowLeft, 
+import {
+  User,
+  Mail,
+  Phone,
+  Calendar,
+  Shield,
+  ArrowLeft,
   ShoppingBag,
   Clock,
   MapPin,
@@ -64,7 +64,7 @@ export default function UserDetails() {
     <div className="space-y-6">
       {/* Header */}
       <div className="flex items-center gap-4">
-        <Link 
+        <Link
           href="/admin/users"
           className="p-2 hover:bg-white rounded-xl transition border border-transparent hover:border-gray-100"
         >
@@ -87,12 +87,11 @@ export default function UserDetails() {
                   {user.name.charAt(0)}
                 </div>
                 <div className="absolute bottom-1 right-1">
-                  <span className={`flex h-4 w-4 rounded-full border-2 border-white ${
-                    user.status === 1 ? "bg-green-500" : "bg-gray-400"
-                  }`}></span>
+                  <span className={`flex h-4 w-4 rounded-full border-2 border-white ${user.status === 1 ? "bg-green-500" : "bg-gray-400"
+                    }`}></span>
                 </div>
               </div>
-              
+
               <div className="space-y-1">
                 <h3 className="text-xl font-bold text-gray-900">{user.name}</h3>
                 <div className="flex items-center gap-2 text-sm text-gray-500">
@@ -104,11 +103,10 @@ export default function UserDetails() {
               <div className="mt-6 pt-6 border-t border-gray-50 space-y-4">
                 <div className="flex items-center justify-between text-sm">
                   <span className="text-gray-500">Status</span>
-                  <span className={`px-2.5 py-1 rounded-full text-[10px] font-bold uppercase ${
-                    user.status === 1 
-                    ? "bg-green-50 text-green-600 border border-green-100" 
-                    : "bg-red-50 text-red-600 border border-red-100"
-                  }`}>
+                  <span className={`px-2.5 py-1 rounded-full text-[10px] font-bold uppercase ${user.status === 1
+                      ? "bg-green-50 text-green-600 border border-green-100"
+                      : "bg-red-50 text-red-600 border border-red-100"
+                    }`}>
                     {user.status === 1 ? "Active" : "Inactive"}
                   </span>
                 </div>
@@ -161,7 +159,7 @@ export default function UserDetails() {
               <h4 className="font-bold text-gray-900">Recent Activity</h4>
               <button className="text-sm font-bold text-blue-600 hover:text-blue-700">View All</button>
             </div>
-            
+
             <div className="divide-y divide-gray-50">
               {/* Placeholder for real activity data */}
               <div className="p-6 flex gap-4">
@@ -176,7 +174,7 @@ export default function UserDetails() {
                   </p>
                 </div>
               </div>
-              
+
               <div className="p-6 flex gap-4 opacity-50">
                 <div className="w-10 h-10 bg-gray-50 rounded-xl flex items-center justify-center text-gray-400">
                   <Clock size={20} />

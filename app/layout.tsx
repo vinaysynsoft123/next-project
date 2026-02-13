@@ -21,12 +21,12 @@ export default function RootLayout({
     <html lang="en">
       <body>
         <AuthProvider>
-        <CartProvider>
-          <Toaster position="top-right" reverseOrder={false} />
-          <Navbar />
-          <main style={{ minHeight: "80vh" }}>{children}</main>
-          <Footer />
-        </CartProvider>
+          <CartProvider>
+            <Toaster position="top-right" reverseOrder={false} />
+            <Navbar />
+            <main style={{ minHeight: "80vh" }}>{children}</main>
+            <Footer />
+          </CartProvider>
         </AuthProvider>
       </body>
     </html>

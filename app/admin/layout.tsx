@@ -4,15 +4,15 @@ import { useAuth } from "@/context/AuthContext";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 import Link from "next/link";
-import { 
-  LayoutDashboard, 
-  Package, 
+import {
+  LayoutDashboard,
+  Package,
   List,
-  Users, 
-  ShoppingCart, 
-  Settings, 
-  LogOut, 
-  Menu, 
+  Users,
+  ShoppingCart,
+  Settings,
+  LogOut,
+  Menu,
   X,
   Bell,
   Search
@@ -61,10 +61,9 @@ export default function AdminLayout({
   return (
     <div className="min-h-screen bg-gray-50 flex">
       {/* Sidebar */}
-      <aside 
-        className={`${
-          isSidebarOpen ? "w-64" : "w-20"
-        } bg-white border-r border-gray-200 transition-all duration-300 flex flex-col fixed h-full z-50`}
+      <aside
+        className={`${isSidebarOpen ? "w-64" : "w-20"
+          } bg-white border-r border-gray-200 transition-all duration-300 flex flex-col fixed h-full z-50`}
       >
         <div className="p-6 flex items-center justify-between">
           {isSidebarOpen ? (
@@ -74,7 +73,7 @@ export default function AdminLayout({
           ) : (
             <div className="w-8 h-8 bg-blue-600 rounded-lg mx-auto" />
           )}
-          <button 
+          <button
             onClick={() => setIsSidebarOpen(!isSidebarOpen)}
             className="p-1.5 hover:bg-gray-100 rounded-lg transition"
           >
@@ -112,9 +111,9 @@ export default function AdminLayout({
         <header className="h-16 bg-white border-b border-gray-200 flex items-center justify-between px-8 sticky top-0 z-40">
           <div className="flex items-center gap-4 bg-gray-100 px-4 py-2 rounded-xl w-96">
             <Search size={18} className="text-gray-400" />
-            <input 
-              type="text" 
-              placeholder="Search something..." 
+            <input
+              type="text"
+              placeholder="Search something..."
               className="bg-transparent outline-none text-sm w-full"
             />
           </div>

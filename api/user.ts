@@ -52,3 +52,14 @@ export async function getUserById(token: string, id: string) {
   if (!res.ok) throw new Error("Failed to fetch user details");
   return res.json();
 }
+
+export async function deleteUser(token: string, id: string) {
+  const res = await fetch(`${API_URL}/user/${id}`, {
+    method: "DELETE",
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+  if (!res.ok) throw new Error("Failed to delete user");
+  return res.json();
+}

@@ -28,7 +28,7 @@ export default function AdminProducts() {
 
   const filteredProducts = products.filter((product) => {
     const matchesSearch = product.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                         (product.details && product.details.toLowerCase().includes(searchQuery.toLowerCase()));
+      (product.details && product.details.toLowerCase().includes(searchQuery.toLowerCase()));
     const matchesCategory = selectedCategory === "" || product.category_id === Number(selectedCategory);
     return matchesSearch && matchesCategory;
   });
@@ -96,7 +96,7 @@ export default function AdminProducts() {
     data.append("price", formData.price);
     data.append("details", formData.details);
     data.append("status", formData.status);
-    
+
     if (image) {
       data.append("image", image);
     }
@@ -134,7 +134,7 @@ export default function AdminProducts() {
           <h1 className="text-2xl font-bold text-gray-900">Products</h1>
           <p className="text-gray-500">Manage your product catalog and inventory.</p>
         </div>
-        <button 
+        <button
           onClick={() => handleOpenModal()}
           className="flex cursor-pointer items-center gap-2 bg-blue-600 text-white px-5 py-2.5 rounded-xl font-semibold hover:bg-blue-700 transition shadow-lg shadow-blue-200"
         >
@@ -147,16 +147,16 @@ export default function AdminProducts() {
         <div className="p-6 border-b border-gray-50 flex flex-col md:flex-row md:items-center justify-between gap-4">
           <div className="relative flex-1">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" size={18} />
-            <input 
-              type="text" 
-              placeholder="Search products by name or details..." 
+            <input
+              type="text"
+              placeholder="Search products by name or details..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               className="pl-10 pr-4 py-2 bg-gray-50 border-none rounded-xl text-sm w-full focus:ring-2 focus:ring-blue-500 outline-none transition"
             />
           </div>
           <div className="flex items-center gap-3">
-            <select 
+            <select
               value={selectedCategory}
               onChange={(e) => setSelectedCategory(e.target.value)}
               className="px-4 py-2 text-sm font-medium text-gray-600 bg-gray-50 rounded-xl border border-gray-100 outline-none focus:ring-2 focus:ring-blue-500 transition"
@@ -211,23 +211,22 @@ export default function AdminProducts() {
                   </td>
                   <td className="px-6 py-4 text-sm font-bold text-gray-900">₹{product.price}</td>
                   <td className="px-6 py-4">
-                    <span className={`px-2.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider ${
-                      Number(product.status) === 1
-                      ? "bg-green-50 text-green-600 border border-green-100" 
+                    <span className={`px-2.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider ${Number(product.status) === 1
+                      ? "bg-green-50 text-green-600 border border-green-100"
                       : "bg-red-50 text-red-600 border border-red-100"
-                    }`}>
+                      }`}>
                       {Number(product.status) === 1 ? "Active" : "Inactive"}
                     </span>
                   </td>
                   <td className="px-6 py-4 text-right">
                     <div className="flex items-center justify-end gap-2">
-                      <button 
+                      <button
                         onClick={() => handleOpenModal(product)}
                         className="p-2 cursor-pointer text-gray-400 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition"
                       >
                         <Edit size={16} />
                       </button>
-                      <button 
+                      <button
                         onClick={() => handleDelete(product.id)}
                         className="p-2 cursor-pointer text-gray-400 hover:text-red-600 hover:bg-red-50 rounded-lg transition"
                       >
@@ -242,7 +241,7 @@ export default function AdminProducts() {
         </div>
       </div>
 
-      <ProductModal 
+      <ProductModal
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
         onSave={handleSave}
