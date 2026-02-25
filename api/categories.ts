@@ -1,8 +1,8 @@
-// api/categories.ts
 import { API_URL } from "@/api/Axois";
+import { Category } from "@/app/components/admin/CategoryModal";
 
 
-export async function getCategories(): Promise<any> {
+export async function getCategories(): Promise<Category[]> {
   const res = await fetch(`${API_URL}/categories`, {
     cache: "no-store",
   });

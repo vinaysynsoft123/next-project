@@ -29,11 +29,15 @@ export default async function ProductsPage() {
                 className="rounded-xl bg-white dark:bg-zinc-900 shadow hover:shadow-lg transition"
               >
                 <Link href={`/products/${product.id}`}>
-                  <img
-                    src={imageUrl}
-                    alt={product.name}
-                    className="w-full h-64 rounded-t-xl object-cover"
-                  />
+                  <div className="relative h-64 w-full">
+                    <Image
+                      src={imageUrl}
+                      alt={product.name}
+                      fill
+                      unoptimized
+                      className="object-cover rounded-t-xl"
+                    />
+                  </div>
                 </Link>
 
                 <div className="p-5">

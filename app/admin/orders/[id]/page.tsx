@@ -18,6 +18,7 @@ import {
 } from "lucide-react";
 import toast from "react-hot-toast";
 import Image from "next/image";
+import { API_URL } from "@/api/Axois";
 
 export default function OrderDetailsPage() {
     const params = useParams();
@@ -179,13 +180,19 @@ export default function OrderDetailsPage() {
                             {order.items?.map((item: any) => (
                                 <div key={item.id} className="p-6 flex items-center gap-6 hover:bg-gray-50/50 transition">
                                     <div className="w-20 h-20 bg-gray-50 rounded-xl overflow-hidden flex-shrink-0 relative border border-gray-100">
-                                        <Image
-                                            src={item.images?.split(",")[0] || "https://images.unsplash.com/photo-1523275335684-37898b6baf30"}
-                                            alt={item.product_name}
-                                            fill
-                                            className="object-cover"
-                                            unoptimized
-                                        />
+                                        {item.images ? (
+                                            <Image
+                                                src={`${API_URL?.replace("/api", "")}/${item.images.split(",")[0].replace(/\\/g, "/")}`}
+                                                alt={item.product_name}
+                                                fill
+                                                className="object-cover"
+                                                unoptimized
+                                            />
+                                        ) : (
+                                            <div className="w-full h-full flex items-center justify-center bg-gray-50 text-gray-400">
+                                                <Package size={24} />
+                                            </div>
+                                        )}
                                     </div>
                                     <div className="flex-1">
                                         <h3 className="font-bold text-gray-900 mb-1">{item.product_name}</h3>

@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import AddToCartButton from "@/app/components/AddToCartButton";
 import { getProductById } from "@/api/products";
+import SimilarProducts from "@/app/components/SimilarProducts";
 
 const API_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
 
@@ -50,6 +51,7 @@ export default async function ProductDetailsPage({
                 alt={product.name}
                 fill
                 priority
+                unoptimized
                 className="object-contain"
               />
             </div>
@@ -89,7 +91,14 @@ export default async function ProductDetailsPage({
             </div>
           </div>
         </div>
+
+        {/* Similar Products */}
+        <SimilarProducts
+          currentProductId={product.id}
+          categoryId={product.category_id}
+        />
       </div>
     </div>
   );
 }
+

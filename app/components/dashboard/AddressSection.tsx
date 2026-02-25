@@ -16,7 +16,7 @@ export default function AddressSection() {
     address_line2: "",
     city: "",
     state: "",
-    zip_code:  "", 
+    zip_code: "",
     country: "India",
     is_default: false,
   });
@@ -135,7 +135,7 @@ export default function AddressSection() {
         {!isAdding && !editingId && (
           <button
             onClick={() => setIsAdding(true)}
-            className="flex items-center gap-2 bg-black text-white px-4 py-2 rounded-xl text-sm font-semibold hover:bg-gray-800 transition"
+            className="flex items-center cursor-pointer gap-2 bg-black text-white px-4 py-2 rounded-xl text-sm font-semibold hover:bg-gray-800 transition"
           >
             <Plus size={18} /> Add New Address
           </button>
@@ -214,10 +214,10 @@ export default function AddressSection() {
             <label htmlFor="is_default" className="text-sm font-medium text-gray-700 cursor-pointer select-none">Set as primary address</label>
           </div>
           <div className="flex gap-3 pt-4 border-t">
-            <button type="submit" className="bg-black text-white px-6 py-2.5 rounded-xl font-bold hover:bg-gray-800 transition shadow-lg shadow-black/10">
+            <button type="submit" className="bg-black text-white cursor-pointer px-6 py-2.5 rounded-xl font-bold hover:bg-gray-800 transition shadow-lg shadow-black/10">
               {editingId ? "Update Address" : "Save Address"}
             </button>
-            <button type="button" onClick={resetForm} className="bg-white border border-gray-200 text-gray-600 px-6 py-2.5 rounded-xl font-bold hover:bg-gray-50 transition">
+            <button type="button" onClick={resetForm} className="bg-white border border-gray-200 text-gray-600 px-6 py-2.5 rounded-xl font-bold hover:bg-gray-50 transition cursor-pointer">
               Cancel
             </button>
           </div>
@@ -242,10 +242,10 @@ export default function AddressSection() {
                     )}
                   </div>
                   <div className="flex gap-2">
-                    <button onClick={() => handleEdit(addr)} className="p-2 text-gray-400 hover:text-black transition">
+                    <button onClick={() => handleEdit(addr)} className="p-2 text-gray-400 hover:text-black transition cursor-pointer">
                       <Edit2 size={16} />
                     </button>
-                    <button onClick={() => handleDelete(addr.id)} className="p-2 text-gray-400 hover:text-red-600 transition">
+                    <button onClick={() => handleDelete(addr.id)} className="p-2 text-gray-400 hover:text-red-600 transition cursor-pointer">
                       <Trash2 size={16} />
                     </button>
                   </div>

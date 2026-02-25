@@ -2,17 +2,28 @@
 
 import { X, Upload } from "lucide-react";
 
+export interface Category {
+  id: number;
+  name: string;
+  slug: string;
+  description?: string;
+  status: string | number;
+  images?: string;
+}
+
+export interface CategoryFormData {
+  name: string;
+  description: string;
+  status: string;
+}
+
 interface CategoryModalProps {
   isOpen: boolean;
   onClose: () => void;
   onSave: (e: React.FormEvent) => Promise<void>;
-  editingCategory: any;
-  formData: {
-    name: string;
-    description: string;
-    status: string;
-  };
-  setFormData: (data: any) => void;
+  editingCategory: Category | null;
+  formData: CategoryFormData;
+  setFormData: React.Dispatch<React.SetStateAction<CategoryFormData>>;
   image: File | null;
   setImage: (image: File | null) => void;
 }
@@ -39,23 +50,23 @@ export default function CategoryModal({
             </h2>
             <p className="text-sm text-gray-500">Organize your products with categories.</p>
           </div>
-          <button 
+          <button
             onClick={onClose}
             className="p-2 cursor-pointer text-gray-400 hover:text-gray-600 hover:bg-gray-100 rounded-xl transition"
           >
             <X size={24} />
           </button>
         </div>
-        
+
         <form onSubmit={onSave} className="p-6 space-y-6">
           <div className="space-y-4">
             <div className="space-y-2">
               <label className="text-sm font-semibold text-gray-700">Category Name</label>
-              <input 
-                type="text" 
+              <input
+                type="text"
                 required
                 value={formData.name}
-                onChange={(e) => setFormData({...formData, name: e.target.value})}
+                onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                 placeholder="e.g. Electronics, Fashion"
                 className="w-full px-4 py-2.5 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition"
               />
@@ -63,9 +74,9 @@ export default function CategoryModal({
 
             <div className="space-y-2">
               <label className="text-sm font-semibold text-gray-700">Display Status</label>
-              <select 
+              <select
                 value={formData.status}
-                onChange={(e) => setFormData({...formData, status: e.target.value})}
+                onChange={(e) => setFormData({ ...formData, status: e.target.value })}
                 className="w-full px-4 py-2.5 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 outline-none transition"
               >
                 <option value="1">Active</option>
@@ -75,10 +86,10 @@ export default function CategoryModal({
 
             <div className="space-y-2">
               <label className="text-sm font-semibold text-gray-700">Description</label>
-              <textarea 
+              <textarea
                 rows={3}
                 value={formData.description}
-                onChange={(e) => setFormData({...formData, description: e.target.value})}
+                onChange={(e) => setFormData({ ...formData, description: e.target.value })}
                 placeholder="Give a brief description..."
                 className="w-full px-4 py-2.5 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 outline-none transition resize-none"
               />
@@ -95,11 +106,11 @@ export default function CategoryModal({
                       <br />SVG, PNG, JPG (max. 1)
                     </p>
                   </div>
-                  <input 
-                    type="file" 
+                  <input
+                    type="file"
                     accept="image/*"
                     onChange={(e) => setImage(e.target.files ? e.target.files[0] : null)}
-                    className="hidden" 
+                    className="hidden"
                   />
                 </label>
               </div>
@@ -112,14 +123,14 @@ export default function CategoryModal({
           </div>
 
           <div className="flex items-center gap-3 pt-4 border-t border-gray-100">
-            <button 
+            <button
               type="button"
               onClick={onClose}
               className="flex-1 cursor-pointer py-3 px-4 bg-white border border-gray-200 text-gray-600 font-bold rounded-xl hover:bg-gray-50 transition"
             >
               Cancel
             </button>
-            <button 
+            <button
               type="submit"
               className="flex-1 cursor-pointer py-3 px-4 bg-blue-600 text-white font-bold rounded-xl hover:bg-blue-700 transition shadow-lg shadow-blue-200"
             >

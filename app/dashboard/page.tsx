@@ -11,8 +11,13 @@ import OrderDetailsSection from "@/app/components/dashboard/OrderDetails";
 import { ShoppingCart, DollarSign, Heart, Package, Clock, Eye } from "lucide-react";
 
 export default function DashboardPage() {
-  const { user, logout } = useAuth();
+  const { user, logout, loading: authLoading } = useAuth();
   const router = useRouter();
+  useEffect(() => {
+    if (!authLoading && user?.role === "Admin") {
+      router.replace("/admin");
+    }
+  }, [user, authLoading, router]);
   const [activeTab, setActiveTab] = useState<"overview" | "profile" | "orders" | "address" | "wishlist">("overview");
   const [profile, setProfile] = useState<any>(null);
   const [orders, setOrders] = useState<any[]>([]);
@@ -96,7 +101,7 @@ export default function DashboardPage() {
     pendingOrders: orders.filter((o) => o.status === "pending").length,
   };
 
-  if (loading) return (
+  if (authLoading || loading) return (
     <div className="min-h-screen flex items-center justify-center">
       <div className="w-12 h-12 border-4 border-black/10 border-t-black rounded-full animate-spin" />
     </div>
@@ -129,7 +134,7 @@ export default function DashboardPage() {
 
           {/* Main Content Area */}
           <div className="flex-1 space-y-8">
-            
+
             {/* STATS GRID - Always visible on Overview or relevant on top */}
             {activeTab === "overview" && (
               <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-6">
@@ -160,7 +165,7 @@ export default function DashboardPage() {
                 <div className="space-y-6">
                   <h2 className="text-2xl font-bold">Recent Activity</h2>
                   <p className="text-gray-500">Welcome to your dashboard overview. Use the sidebar to navigate through your profile, orders, and addresses.</p>
-                  
+
                   {/* Quick recent orders list simplified */}
                   <div className="mt-8">
                     <h3 className="text-lg font-semibold mb-4">Latest Orders</h3>
@@ -178,8 +183,7 @@ export default function DashboardPage() {
                           </div>
                           <div className="text-right">
                             <p className="font-bold">${order.total_amount}</p>
-                            <p className={`text-xs font-bold uppercase ${
-                                order.status === "delivered" ? "text-green-600" : "text-amber-600"
+                            <p className={`text-xs font-bold uppercase ${order.status === "delivered" ? "text-green-600" : "text-amber-600"
                               }`}>{order.status}</p>
                           </div>
                         </div>
@@ -196,7 +200,7 @@ export default function DashboardPage() {
                     {!isEditing && (
                       <button
                         onClick={() => setIsEditing(true)}
-                        className="bg-black text-white px-5 py-2 rounded-xl text-sm font-semibold hover:bg-gray-800 transition"
+                        className="bg-black text-white px-5 cursor-pointer py-2 rounded-xl text-sm font-semibold hover:bg-gray-800 transition"
                       >
                         Edit Profile
                       </button>
@@ -212,7 +216,7 @@ export default function DashboardPage() {
                           value={updateForm.name}
                           onChange={(e) => setUpdateForm({ ...updateForm, name: e.target.value })}
                           className="w-full bg-gray-50 border-gray-200 rounded-xl p-3 focus:ring-2 focus:ring-black focus:border-transparent outline-none transition"
-                          
+
                         />
                       </div>
                       <div className="space-y-2">
@@ -222,17 +226,17 @@ export default function DashboardPage() {
                           value={updateForm.email}
                           onChange={(e) => setUpdateForm({ ...updateForm, email: e.target.value })}
                           className="w-full bg-gray-50 border-gray-200 rounded-xl p-3 focus:ring-2 focus:ring-black focus:border-transparent outline-none transition"
-                          
+
                         />
                       </div>
-                       <div className="space-y-2">
+                      <div className="space-y-2">
                         <label className="text-sm font-semibold text-gray-700 ml-1">Mobile </label>
                         <input
                           type="text"
                           value={updateForm.mobile}
                           onChange={(e) => setUpdateForm({ ...updateForm, mobile: e.target.value })}
                           className="w-full bg-gray-50 border-gray-200 rounded-xl p-3 focus:ring-2 focus:ring-black focus:border-transparent outline-none transition"
-                          
+
                         />
                       </div>
                       <div className="md:col-span-2 flex gap-3 pt-4 border-t mt-4">
@@ -265,12 +269,12 @@ export default function DashboardPage() {
                 </div>
               )}
 
-               {activeTab === "orders" && (
+              {activeTab === "orders" && (
                 <div>
                   {selectedOrderId ? (
-                    <OrderDetailsSection 
-                      orderId={selectedOrderId} 
-                      onBack={() => setSelectedOrderId(null)} 
+                    <OrderDetailsSection
+                      orderId={selectedOrderId}
+                      onBack={() => setSelectedOrderId(null)}
                     />
                   ) : (
                     <>
@@ -284,8 +288,8 @@ export default function DashboardPage() {
                       ) : (
                         <div className="space-y-4">
                           {orders.map((order) => (
-                            <div 
-                              key={order.id} 
+                            <div
+                              key={order.id}
                               onClick={() => setSelectedOrderId(order.id)}
                               className="p-6 rounded-2xl border border-gray-100 bg-gray-50/50 hover:bg-white hover:shadow-md transition-all group cursor-pointer"
                             >
@@ -305,11 +309,10 @@ export default function DashboardPage() {
                                     <p className="text-xl font-extrabold text-gray-900">${order.total_amount}</p>
                                   </div>
                                   <div className="flex items-center gap-4">
-                                    <div className={`px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-wider ${
-                                      order.status === "delivered" ? "bg-green-100 text-green-700" : 
-                                      order.status === "pending" ? "bg-amber-100 text-amber-700" : 
-                                      "bg-blue-100 text-blue-700"
-                                    }`}>
+                                    <div className={`px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-wider ${order.status === "delivered" ? "bg-green-100 text-green-700" :
+                                      order.status === "pending" ? "bg-amber-100 text-amber-700" :
+                                        "bg-blue-100 text-blue-700"
+                                      }`}>
                                       {order.status}
                                     </div>
                                     <Eye className="text-gray-300 group-hover:text-black transition-colors" size={20} />

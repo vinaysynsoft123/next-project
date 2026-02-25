@@ -1,27 +1,25 @@
 "use client";
 
-import { 
-  Plus, 
-  Search, 
-  Trash2, 
-  Edit, 
-  LayoutGrid,
-  Upload,
-  MoreVertical
+import {
+  Plus,
+  Search,
+  Trash2,
+  Edit,
+  LayoutGrid
 } from "lucide-react";
 import { useEffect, useState } from "react";
 import { getCategories, createCategory, updateCategory, deleteCategory } from "@/api/categories";
 import toast from "react-hot-toast";
-import CategoryModal from "@/app/components/admin/CategoryModal";
+import CategoryModal, { Category, CategoryFormData } from "@/app/components/admin/CategoryModal";
 
 export default function AdminCategories() {
   const API_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
-  const [categories, setCategories] = useState<any[]>([]);
+  const [categories, setCategories] = useState<Category[]>([]);
   const [loading, setLoading] = useState(true);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [editingCategory, setEditingCategory] = useState<any>(null);
+  const [editingCategory, setEditingCategory] = useState<Category | null>(null);
   const [searchQuery, setSearchQuery] = useState("");
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<CategoryFormData>({
     name: "",
     description: "",
     status: "1",
@@ -37,7 +35,7 @@ export default function AdminCategories() {
       setLoading(true);
       const data = await getCategories();
       setCategories(data);
-    } catch (err: any) {
+    } catch {
       toast.error("Failed to load categories");
     } finally {
       setLoading(false);
@@ -49,7 +47,7 @@ export default function AdminCategories() {
     cat.description?.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
-  const handleOpenModal = (category: any = null) => {
+  const handleOpenModal = (category: Category | null = null) => {
     if (category) {
       setEditingCategory(category);
       setFormData({
@@ -75,7 +73,7 @@ export default function AdminCategories() {
     data.append("name", formData.name);
     data.append("description", formData.description);
     data.append("status", formData.status);
-    
+
     if (image) {
       data.append("image", image);
     }
@@ -90,8 +88,9 @@ export default function AdminCategories() {
       }
       setIsModalOpen(false);
       fetchData();
-    } catch (err: any) {
-      toast.error(err.message || "Operation failed");
+    } catch (err: unknown) {
+      const errorMessage = err instanceof Error ? err.message : "Operation failed";
+      toast.error(errorMessage);
     }
   };
 
@@ -101,8 +100,9 @@ export default function AdminCategories() {
       await deleteCategory(id);
       toast.success("Category deleted");
       fetchData();
-    } catch (err: any) {
-      toast.error(err.message || "Deletion failed");
+    } catch (err: unknown) {
+      const errorMessage = err instanceof Error ? err.message : "Deletion failed";
+      toast.error(errorMessage);
     }
   };
 
@@ -119,7 +119,7 @@ export default function AdminCategories() {
           <h1 className="text-2xl font-bold text-gray-900">Categories</h1>
           <p className="text-gray-500">Manage your product categorization and icons.</p>
         </div>
-        <button 
+        <button
           onClick={() => handleOpenModal()}
           className="flex cursor-pointer items-center gap-2 bg-blue-600 text-white px-5 py-2.5 rounded-xl font-semibold hover:bg-blue-700 transition shadow-lg shadow-blue-200"
         >
@@ -132,9 +132,9 @@ export default function AdminCategories() {
         <div className="p-6 border-b border-gray-50">
           <div className="relative max-w-md">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" size={18} />
-            <input 
-              type="text" 
-              placeholder="Search categories..." 
+            <input
+              type="text"
+              placeholder="Search categories..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               className="pl-10 pr-4 py-2 bg-gray-50 border-none rounded-xl text-sm w-full focus:ring-2 focus:ring-blue-500 outline-none transition"
@@ -159,7 +159,7 @@ export default function AdminCategories() {
                   <td className="px-6 py-4">
                     <div className="w-12 h-12 bg-gray-50 rounded-xl overflow-hidden border border-gray-100 flex items-center justify-center">
                       {cat.images ? (
-                        <img 
+                        <img
                           src={`${API_URL?.replace("/api", "")}/${cat.images.replace(/\\/g, "/")}`}
                           alt={cat.name}
                           className="w-full h-full object-cover"
@@ -172,23 +172,22 @@ export default function AdminCategories() {
                   <td className="px-6 py-4 font-bold text-gray-900">{cat.name}</td>
                   <td className="px-6 py-4 text-sm text-gray-500 max-w-xs truncate">{cat.description || "—"}</td>
                   <td className="px-6 py-4">
-                    <span className={`px-2.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider ${
-                      Number(cat.status) === 1
-                      ? "bg-green-50 text-green-600 border border-green-100" 
+                    <span className={`px-2.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider ${Number(cat.status) === 1
+                      ? "bg-green-50 text-green-600 border border-green-100"
                       : "bg-red-50 text-red-600 border border-red-100"
-                    }`}>
+                      }`}>
                       {Number(cat.status) === 1 ? "Active" : "Inactive"}
                     </span>
                   </td>
                   <td className="px-6 py-4">
                     <div className="flex items-center justify-end gap-2">
-                      <button 
+                      <button
                         onClick={() => handleOpenModal(cat)}
                         className="p-2 cursor-pointer text-gray-400 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition"
                       >
                         <Edit size={16} />
                       </button>
-                      <button 
+                      <button
                         onClick={() => handleDelete(cat.id)}
                         className="p-2 cursor-pointer text-gray-400 hover:text-red-600 hover:bg-red-50 rounded-lg transition"
                       >
@@ -203,7 +202,7 @@ export default function AdminCategories() {
         </div>
       </div>
 
-      <CategoryModal 
+      <CategoryModal
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
         onSave={handleSave}

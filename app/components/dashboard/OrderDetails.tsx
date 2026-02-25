@@ -1,9 +1,10 @@
 "use client";
-
+import Image from "next/image";
 import { useEffect, useState } from "react";
 import { ArrowLeft, Package, Truck, MapPin, CreditCard, Calendar, ShoppingBag } from "lucide-react";
 import { getOrderDetails } from "@/api/order";
 import toast from "react-hot-toast";
+import { API_URL } from "@/api/Axois";
 
 type OrderDetailsProps = {
   orderId: number;
@@ -38,11 +39,11 @@ export default function OrderDetailsSection({ orderId, onBack }: OrderDetailsPro
   );
 
   if (!order) return <div className="text-center py-20">Order not found.</div>;
-const paymentLabel =
-  order.payment_method === "cod" ? "Cash on Delivery" : "Online Payment";
+  const paymentLabel =
+    order.payment_method === "cod" ? "Cash on Delivery" : "Online Payment";
   return (
     <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
-      <button 
+      <button
         onClick={onBack}
         className="flex items-center gap-2 text-gray-500 font-bold hover:text-black transition-colors group"
       >
@@ -57,9 +58,8 @@ const paymentLabel =
               <Calendar size={14} />
               {new Date(order.created_at).toLocaleDateString("en-US", { dateStyle: "long" })}
             </div>
-            <span className={`px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-widest ${
-                order.status === "delivered" ? "bg-green-100 text-green-700" : 
-                order.status === "pending" ? "bg-amber-100 text-amber-700" : 
+            <span className={`px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-widest ${order.status === "delivered" ? "bg-green-100 text-green-700" :
+              order.status === "pending" ? "bg-amber-100 text-amber-700" :
                 "bg-blue-100 text-blue-700"
               }`}>
               {order.status}
@@ -73,7 +73,7 @@ const paymentLabel =
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-        
+
         {/* Items List */}
         <div className="lg:col-span-2 space-y-4">
           <div className="bg-white rounded-3xl border border-gray-100 shadow-sm overflow-hidden">
@@ -84,9 +84,21 @@ const paymentLabel =
             <div className="divide-y divide-gray-50">
               {order.items?.map((item: any) => (
                 <div key={item.id} className="p-6 flex items-center gap-4 group">
-                  <div className="w-16 h-16 bg-gray-50 rounded-2xl flex-shrink-0 flex items-center justify-center border border-gray-100 group-hover:bg-white transition-colors">
-                    <Package size={24} className="text-gray-300" />
-                  </div>
+
+                  {item.images ? (
+                    <Image
+                      src={`${API_URL?.replace("/api", "")}/${item.images.split(",")[0].replace(/\\/g, "/")}`}
+                      alt={item.product_name}
+                      width={64}
+                      height={64}
+                      className="object-cover rounded-2xl"
+                      unoptimized
+                    />
+                  ) : (
+                    <div className="w-16 h-16 bg-gray-50 rounded-2xl flex-shrink-0 flex items-center justify-center border border-gray-100 group-hover:bg-white transition-colors">
+                      <Package size={24} className="text-gray-300" />
+                    </div>
+                  )}
                   <div className="flex-1">
                     <p className="font-bold text-gray-900">{item.product_name}</p>
                     <p className="text-sm text-gray-500">Qty: {item.quantity} × ${item.price}</p>
@@ -123,7 +135,7 @@ const paymentLabel =
               <div className="bg-gray-50 p-2 rounded-lg border border-gray-100 text-gray-400">
                 <Truck size={16} />
               </div>
-          
+
               <div>
                 <p className="text-sm font-bold text-gray-900">{order.payment_method}</p>
                 <p className="text-[10px] text-gray-500 font-bold uppercase tracking-wider">{paymentLabel}</p>
